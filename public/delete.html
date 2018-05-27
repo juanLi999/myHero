@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/art-template/lib/template-web.js"></script>
+    <script src="/node_modules/axios/dist/axios.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <div id='tb'>
+
+    </div>
+    <script type="text/template" id='tmpl'>
+           
+
+          <p>{{ id }}</p>
+          <p>{{username }}</p>
+          <p>{{ gender }}</p>
+          <p>{{ ctime }}</p>
+        </script> -->
+    <script>
+        $(function () {
+            const ser = new URLSearchParams(location.search)
+            const id = ser.get('id');
+            axios.get('http://localhost:5000/api/delhero?id=' + id).then(function (results) {
+                console.log(results);
+                if (results.status == 200 && results.data.err_code == 0) {
+                    // var html = template('tmpl', results.data.message)
+                    // var tb = $('#tb');
+                    // tb.html(html);
+                    location.href = 'index.html'
+                }
+
+            })
+        })    
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/art-template/lib/template-web.js"></script>
+    <script src="/node_modules/axios/dist/axios.js"></script>
+</head>
+
+<body>
+    <h1>王者农药</h1>
+
+    <!-- jquery  $  bootstrap -->
+
+
+    <div class="container">
+        <div class="btn btn-success pull-right">添加新英雄</div>
+        <table class="table">
+            <tr>
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>性别</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </tr>
+            <tbody id='tb'>
+
+            </tbody>
+        </table>
+
+    </div>
+    <script type="text/template" id='tmpl'>
+        {{ each message }}
+    <tr>
+      <td>{{ $value.id }}</td>
+      <td>{{ $value.username }}</td>
+      <td>{{ $value.gender }}</td>
+      <td>{{ $value.ctime }}</td>
+      <td>
+        <a href="getinfo.html?id={{ $value.id }}">查看</a>
+        <a href="edit.html?id={{ $value.id }}">编辑</a>
+        <a href="delete.html?id={{ $value.id }}">删除</a>
+      </td>
+    </tr>
+    {{ /each }}
+    </script>
+    <script>
+        // $.ajax({
+        //     url: 'http://localhost:5000/api/getheros',
+        //     type: 'get',
+        //     success: function (data) {
+        //         console.log(data)
+        //         var html = template('tmpl', data)
+        //         var tb = $('#tb');
+        //         tb.html(html);
+        //     }
+        // })
+        $(function () {
+            axios.get('http://localhost:5000/api/getheros').then(function (results) {
+                console.log(results);
+                if (results.status == 200 && results.data.err_code == 0) {
+                    var html = template('tmpl', results.data)
+                    var tb = $('#tb');
+                    tb.html(html);
+                }
+
+            })
+        })
+
+
+    </script>
+</body>
+
+</html>
